@@ -23,9 +23,9 @@ spec:
         - name: AUTHENTICATION_APIKEY_ENABLED
           value: "true"
         - name: AUTHENTICATION_APIKEY_ADMIN_KEY
-          value: "test-admin-key"
+          value: "testaks"
         - name: AUTHENTICATION_APIKEY_DEFAULT_KEY
-          value: "test-default-key"
+          value: "testaksweave"
 ---
 apiVersion: v1
 kind: Service
