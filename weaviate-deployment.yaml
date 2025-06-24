@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weaviate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weaviate
+  template:
+    metadata:
+      labels:
+        app: weaviate
+    spec:
+      containers:
+      - name: weaviate
+        image: semitechnologies/weaviate:latest
+        ports:
+        - containerPort: 8080   # The container still listens on 8080
+        env:
+        - name: AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED
+          value: "false"
+        - name: AUTHENTICATION_APIKEY_ENABLED
+          value: "true"
+        - name: AUTHENTICATION_APIKEY_ADMIN_KEY
+          value: "test-admin-key"
+        - name: AUTHENTICATION_APIKEY_DEFAULT_KEY
+          value: "test-default-key"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weaviate
+spec:
+  selector:
+    app: weaviate
+  ports:
+  - port: 8081          # Expose service on port 8081
+    targetPort: 8080    # Forward to container's port 8080
+  type: ClusterIP
